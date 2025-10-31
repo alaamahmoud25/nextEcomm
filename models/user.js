@@ -1,13 +1,11 @@
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 
-// تعريف الـ Schema
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: [true, 'Name is required'],
-      unique: true,
       trim: true,
       minlength: 3,
       maxlength: 255,
@@ -24,15 +22,16 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: function () {
+        // ✅ مطلوب فقط إذا المستخدم مش داخل عن طريق Google
+        return !this.image;
+      },
     },
     role: {
       type: String,
       default: 'user',
     },
-    image: {
-      type: String,
-    },
+    image: String,
     resetCode: {
       data: String,
       expiresAt: {
@@ -44,8 +43,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// إضافة الـ plugin للـ Schema
 userSchema.plugin(uniqueValidator);
 
-// تصدير الموديل (لتجنب الخطأ في إعادة التحميل في Next.js)
 export default mongoose.models.User || mongoose.model('User', userSchema);
