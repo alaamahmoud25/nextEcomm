@@ -1,5 +1,5 @@
 "use client"
-import TopNav from "@/components/TopNav";
+import TopNav from "@/components/nav/TopNav";
 import "./globals.css";
 import "bootstrap-material-design/dist/css/bootstrap-material-design.min.css";
 import { Toaster } from "react-hot-toast";

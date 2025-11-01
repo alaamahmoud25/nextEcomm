@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import uniqueValidator from 'mongoose-unique-validator';
 
 const userSchema = new mongoose.Schema(
   {
@@ -13,17 +12,17 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: [true, 'Email is required'],
-      unique: true,
+      unique: true, // ✅ هذا وحده كافٍ الآن
       trim: true,
       lowercase: true,
       minlength: 5,
       maxlength: 255,
-      index: true,
+      index: true, // لتسريع البحث
     },
     password: {
       type: String,
       required: function () {
-        // ✅ مطلوب فقط إذا المستخدم مش داخل عن طريق Google
+        // ✅ مطلوب فقط إذا المستخدم ما عنده حساب Google
         return !this.image;
       },
     },
@@ -43,6 +42,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.plugin(uniqueValidator);
+// ❌ احذف هذا السطر
+// userSchema.plugin(uniqueValidator);
 
 export default mongoose.models.User || mongoose.model('User', userSchema);

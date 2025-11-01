@@ -15,7 +15,12 @@ function TopNav() {
 
       {status === 'authenticated' ? (
         <div className="d-flex">
-          <Link className="nav-link" href="/dashboard/user">
+          <Link
+            className="nav-link"
+            href={`/dashboard/${
+              data?.user?.role === 'admin' ? 'admin' : 'user'
+            }`}
+          >
             {data?.user?.name}({data?.user?.role})
           </Link>
           <a
