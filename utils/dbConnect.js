@@ -5,10 +5,7 @@ if (!DB_URI) {
 }
 async function dbConnect() {
   try {
-    await mongoose.connect(DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(DB_URI);
   } catch (error) {
     console.error("MongoDB connection error:", error);
     throw error;
